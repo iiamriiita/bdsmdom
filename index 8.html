@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BDSM Preferences Survey (For My Dom)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#fff;--bg2:#f7f7f5;--bg3:#efefec;
+  --text:#1a1a1a;--text2:#666;--text3:#aaa;
+  --border:rgba(0,0,0,.10);--border2:rgba(0,0,0,.20);--border3:rgba(0,0,0,.38);
+  --green:#1e6e34;--green-bg:#edfbf1;
+  --r:8px;--rl:12px;
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#1c1c1c;--bg2:#272727;--bg3:#313131;
+  --text:#e4e4e4;--text2:#999;--text3:#555;
+  --border:rgba(255,255,255,.10);--border2:rgba(255,255,255,.20);--border3:rgba(255,255,255,.38);
+  --green:#4ade80;--green-bg:#0d2e19;
+}}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg3);color:var(--text);min-height:100vh;line-height:1.6}
+.wrap{max-width:700px;margin:0 auto;padding:24px 16px 110px}
+.lang-row{display:flex;gap:8px;align-items:center;margin-bottom:20px}
+.lang-btn{padding:5px 14px;border:.5px solid var(--border2);border-radius:var(--r);background:transparent;cursor:pointer;font-size:13px;color:var(--text2);font-family:inherit;transition:all .15s}
+.lang-btn.active{background:var(--bg2);color:var(--text);border-color:var(--border3)}
+h1{font-size:22px;font-weight:500;margin-bottom:6px}
+.sub{font-size:14px;color:var(--text2);line-height:1.5;margin-bottom:20px}
+
+/* step progress */
+.step-info{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.step-label{font-size:13px;color:var(--text2)}
+.step-filled{font-size:13px;color:var(--text3)}
+.prog-wrap{height:3px;background:var(--border);border-radius:2px;margin-bottom:6px;overflow:hidden}
+.prog-bar{height:100%;background:var(--text);border-radius:2px;transition:width .3s}
+.step-dots{display:flex;gap:4px;margin-bottom:24px;flex-wrap:wrap}
+.step-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .2s;flex-shrink:0}
+.step-dot.active{background:var(--text);transform:scale(1.3)}
+.step-dot.done{background:var(--text2)}
+
+/* section */
+.sec-head{font-size:16px;font-weight:500;padding:10px 0;border-bottom:.5px solid var(--border);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.sec-icon{font-size:16px;color:var(--text2)}
+.q-card{background:var(--bg);border:.5px solid var(--border);border-radius:var(--rl);padding:14px 16px;margin-bottom:10px;transition:border-color .15s}
+.q-card:hover{border-color:var(--border2)}
+.q-top{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px}
+.q-num{font-size:11px;color:var(--text3);min-width:18px;padding-top:3px;flex-shrink:0}
+.q-text{font-size:14px;color:var(--text);line-height:1.5;flex:1}
+.q-info{width:18px;height:18px;border-radius:50%;border:.5px solid var(--border2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;padding:0;transition:all .15s}
+.q-info:hover{background:var(--bg2)}
+.q-info i{font-size:11px;color:var(--text2)}
+.q-tip{display:none;margin:0 0 10px 26px;font-size:13px;color:var(--text2);background:var(--bg2);border-radius:var(--r);padding:8px 12px;line-height:1.5;border-left:2px solid var(--border2)}
+.q-tip.open{display:block}
+.rating-row{display:flex;align-items:center;gap:10px;margin-left:26px}
+.rl{font-size:11px;color:var(--text3);min-width:20px}
+.rl.right{text-align:right}
+input[type=range]{flex:1;height:4px;-webkit-appearance:none;appearance:none;background:var(--border);border-radius:2px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--text);border:2px solid var(--bg);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--text);border:2px solid var(--bg);cursor:pointer;border:none}
+.r-val{font-size:13px;font-weight:500;min-width:20px;text-align:center}
+.note-toggle{font-size:12px;color:var(--text3);cursor:pointer;display:flex;align-items:center;gap:3px;margin:8px 0 0 26px;border:none;background:none;padding:0;font-family:inherit}
+.note-toggle:hover{color:var(--text2)}
+.note-area{margin:6px 0 0 26px;display:none}
+.note-area.open{display:block}
+.note-row{display:flex;gap:6px;align-items:flex-start}
+textarea{flex:1;border:.5px solid var(--border2);border-radius:var(--r);padding:8px 10px;font-size:13px;font-family:inherit;color:var(--text);background:var(--bg2);resize:vertical;min-height:56px;line-height:1.5}
+textarea:focus{outline:none;border-color:var(--border3)}
+.mic-btn{width:34px;height:34px;border-radius:50%;border:.5px solid var(--border2);background:var(--bg2);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);flex-shrink:0;transition:all .15s}
+.mic-btn:hover{background:var(--bg3)}
+.mic-btn.recording{background:#fef2f2;border-color:#fca5a5;color:#b91c1c;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.mic-st{font-size:11px;color:var(--text3);margin-top:4px;min-height:14px}
+.mic-st.on{color:#b91c1c}
+
+.comm-card{background:var(--bg);border:.5px solid var(--border);border-radius:var(--rl);padding:14px 16px;margin-bottom:10px}
+.comm-label{font-size:14px;color:var(--text);margin-bottom:10px}
+.comm-opts{display:flex;flex-wrap:wrap;gap:6px}
+.comm-opt{padding:5px 14px;border:.5px solid var(--border2);border-radius:20px;font-size:13px;cursor:pointer;color:var(--text2);background:transparent;font-family:inherit;transition:all .15s}
+.comm-opt.sel{background:var(--bg2);border-color:var(--border3);color:var(--text)}
+.open-card{background:var(--bg);border:.5px solid var(--border);border-radius:var(--rl);padding:14px 16px;margin-bottom:10px}
+.open-label{font-size:14px;color:var(--text);margin-bottom:8px}
+.open-row{display:flex;gap:6px;align-items:flex-start}
+.open-ta{width:100%;min-height:72px}
+
+/* fixed nav */
+.fixed-bar{position:fixed;bottom:0;left:0;right:0;background:var(--bg);border-top:.5px solid var(--border);padding:12px 16px;z-index:100}
+.fixed-inner{max-width:700px;margin:0 auto;display:flex;gap:10px;justify-content:space-between;align-items:center}
+.btn{padding:9px 20px;border-radius:var(--r);font-size:14px;font-family:inherit;cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-ghost{background:transparent;color:var(--text2);border:.5px solid var(--border2)}
+.btn-ghost:hover{border-color:var(--border3);color:var(--text)}
+.btn-primary{background:var(--text);color:var(--bg);border:none;font-weight:500}
+.btn-primary:hover{opacity:.83}
+.btn-sm{padding:7px 14px;font-size:13px}
+.nav-center{font-size:12px;color:var(--text3);text-align:center;flex:1}
+
+/* results */
+.res-header{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;justify-content:space-between;margin-bottom:24px}
+.res-title{font-size:22px;font-weight:500;margin-bottom:4px}
+.res-meta{font-size:13px;color:var(--text2)}
+.res-actions{display:flex;gap:8px;flex-wrap:wrap}
+.sort-btn,.share-btn{padding:7px 12px;border:.5px solid var(--border2);border-radius:var(--r);background:var(--bg2);color:var(--text2);font-size:13px;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.sort-btn:hover,.share-btn:hover{border-color:var(--border3);color:var(--text)}
+.tr-bar{background:var(--bg2);border:.5px solid var(--border);border-radius:var(--r);padding:10px 14px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.tr-status{font-size:13px;color:var(--text2);flex:1}
+.res-sec{margin-bottom:24px}
+.res-sec-title{font-size:15px;font-weight:500;padding-bottom:8px;border-bottom:.5px solid var(--border);margin-bottom:12px}
+.res-item{display:flex;align-items:flex-start;gap:12px;padding:8px 0;border-bottom:.5px solid var(--border)}
+.res-item:last-child{border-bottom:none}
+.res-qtext{font-size:13px;color:var(--text);flex:1;line-height:1.4}
+.res-note{font-size:12px;color:var(--text2);margin-top:3px;font-style:italic}
+.res-note-tr{font-size:12px;color:var(--text3);margin-top:2px;font-style:italic}
+.score-wrap{display:flex;align-items:center;gap:8px;min-width:68px;padding-top:2px}
+.score-bar-bg{width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.score-bar{height:100%;border-radius:2px;background:var(--text)}
+.score-num{font-size:13px;font-weight:500;min-width:16px;text-align:right}
+.score-high{color:var(--green)}
+.open-ans{font-size:13px;background:var(--bg2);border-radius:var(--r);padding:8px 10px;margin-top:4px;line-height:1.5}
+.open-ans-tr{font-size:12px;color:var(--text2);background:var(--bg3);border-radius:var(--r);padding:6px 10px;margin-top:4px;line-height:1.5;font-style:italic}
+.export-row{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.shared-banner{background:var(--green-bg);border:.5px solid var(--green);border-radius:var(--r);padding:10px 14px;margin-bottom:20px;font-size:13px;color:var(--green);display:flex;align-items:center;gap:8px}
+.toast{position:fixed;bottom:72px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:8px 20px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:999;white-space:nowrap}
+.toast.show{opacity:1}
+
+/* comments */
+.score-num[data-scorecmt]{cursor:pointer;position:relative;transition:opacity .15s}
+.score-num[data-scorecmt]:hover{opacity:.6}
+.score-num[data-scorecmt]:hover::after{content:'\ea3a';font-family:'tabler-icons';font-size:11px;position:absolute;top:-8px;right:-12px;color:var(--text3)}
+.score-num.has-cmt{color:#c2820a !important}
+.cmt-highlight{background:rgba(255,206,84,.35);border-bottom:2px solid #f0b429;cursor:pointer;border-radius:2px;padding:0 1px}
+@media(prefers-color-scheme:dark){.cmt-highlight{background:rgba(240,180,41,.28);border-bottom-color:#f0b429}}
+.cmt-highlight.resolved{background:rgba(120,120,120,.18);border-bottom-color:var(--border2)}
+.cmt-pin{display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 4px;background:#f0b429;color:#3a2c00;border-radius:8px;font-size:10px;font-weight:500;vertical-align:super;margin-left:1px;cursor:pointer}
+.cmt-popover{position:fixed;z-index:1000;background:var(--bg);border:.5px solid var(--border2);border-radius:var(--rl);box-shadow:0 4px 24px rgba(0,0,0,.18);width:300px;max-width:calc(100vw - 24px);padding:0;overflow:hidden}
+.cmt-pop-head{padding:10px 14px;border-bottom:.5px solid var(--border);font-size:12px;color:var(--text2);background:var(--bg2)}
+.cmt-pop-quote{font-style:italic;color:var(--text);margin-top:2px;font-size:12px}
+.cmt-thread{max-height:240px;overflow-y:auto;padding:8px 14px}
+.cmt-msg{padding:6px 0;border-bottom:.5px solid var(--border)}
+.cmt-msg:last-child{border-bottom:none}
+.cmt-author{font-size:11px;font-weight:500;margin-bottom:2px;display:flex;align-items:center;gap:5px}
+.cmt-author.them{color:#c2820a}
+.cmt-author.you{color:var(--green)}
+.cmt-author.name0{color:#1f6fc0}
+.cmt-author.name1{color:#c2456e}
+.cmt-dot{width:6px;height:6px;border-radius:50%}
+.cmt-text{font-size:13px;color:var(--text);line-height:1.45}
+.cmt-input-row{padding:10px 14px;border-top:.5px solid var(--border);display:flex;gap:6px;align-items:flex-start}
+.cmt-input{flex:1;border:.5px solid var(--border2);border-radius:var(--r);padding:6px 9px;font-size:13px;font-family:inherit;color:var(--text);background:var(--bg2);resize:none;min-height:38px;line-height:1.4}
+.cmt-input:focus{outline:none;border-color:var(--border3)}
+.cmt-send{padding:6px 12px;background:var(--text);color:var(--bg);border:none;border-radius:var(--r);font-size:13px;cursor:pointer;font-family:inherit;align-self:stretch;white-space:nowrap}
+.cmt-actions{display:flex;gap:8px;padding:8px 14px;border-top:.5px solid var(--border)}
+.cmt-act-btn{font-size:12px;color:var(--text2);background:none;border:none;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:4px}
+.cmt-act-btn:hover{color:var(--text)}
+.cmt-sel-toolbar{position:fixed;z-index:1001;background:var(--text);color:var(--bg);border-radius:20px;padding:6px 14px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+.cmt-role-bar{background:var(--bg2);border:.5px solid var(--border);border-radius:var(--r);padding:8px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px}
+.cmt-role-badge{font-size:12px;padding:3px 10px;border-radius:12px;font-weight:500}
+.cmt-role-badge.them{background:#fdf0d5;color:#9a6a00}
+.cmt-role-badge.you{background:var(--green-bg);color:var(--green)}
+.cmt-count-badge{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);background:var(--bg3);padding:3px 9px;border-radius:12px}
+.cmt-name-pick{padding:4px 12px;border:.5px solid var(--border2);border-radius:14px;background:var(--bg);font-size:13px;font-family:inherit;cursor:pointer;color:var(--text);display:inline-flex;align-items:center;transition:all .15s}
+.cmt-name-pick:hover{background:var(--bg2)}
+.cmt-name-change{font-size:11px;color:var(--text3);background:none;border:none;cursor:pointer;font-family:inherit;text-decoration:underline;padding:0}
+.cmt-name-change:hover{color:var(--text2)}
+.name-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px}
+.name-modal{background:var(--bg);border-radius:var(--rl);padding:24px;max-width:340px;width:100%;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,.25)}
+.name-modal h3{font-size:18px;font-weight:500;margin-bottom:6px}
+.name-modal p{font-size:13px;color:var(--text2);margin-bottom:18px}
+.name-modal-btns{display:flex;gap:10px}
+.name-modal-btn{flex:1;padding:14px;border-radius:var(--r);border:1.5px solid var(--border2);background:var(--bg2);font-size:15px;font-weight:500;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .15s}
+.name-modal-btn:hover{transform:translateY(-1px)}
+.name-modal-btn .dot{width:10px;height:10px;border-radius:50%}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div id="vSurvey">
+  <div class="lang-row">
+    <i class="ti ti-language" style="font-size:16px;color:var(--text2)" aria-hidden="true"></i>
+    <button class="lang-btn active" onclick="setLang('en')" id="btnEn">English</button>
+    <button class="lang-btn" onclick="setLang('zh')" id="btnZh">中文</button>
+  </div>
+  <h1 id="sTitle"></h1>
+  <p class="sub" id="sSub"></p>
+  <div class="step-info"><span class="step-label" id="stepLabel"></span><span class="step-filled" id="stepFilled"></span></div>
+  <div class="prog-wrap"><div class="prog-bar" id="progBar" style="width:0%"></div></div>
+  <div class="step-dots" id="stepDots"></div>
+  <div id="stepContent"></div>
+</div>
+
+<div id="vResults" style="display:none">
+  <div class="lang-row">
+    <i class="ti ti-language" style="font-size:16px;color:var(--text2)" aria-hidden="true"></i>
+    <button class="lang-btn active" onclick="setLang('en')" id="rBtnEn">English</button>
+    <button class="lang-btn" onclick="setLang('zh')" id="rBtnZh">中文</button>
+  </div>
+  <div id="sharedBanner" style="display:none"></div>
+  <div class="cmt-role-bar" id="cmtRoleBar" style="display:none"></div>
+  <div class="res-header">
+    <div><h1 id="rTitle"></h1><p class="res-meta" id="rMeta"></p></div>
+    <div class="res-actions">
+      <button class="sort-btn" onclick="toggleSort()"><i class="ti ti-arrows-sort" aria-hidden="true"></i><span id="sortLbl"></span></button>
+      <button class="share-btn" onclick="shareResults()"><i class="ti ti-link" aria-hidden="true"></i><span id="shareLbl"></span></button>
+    </div>
+  </div>
+  <div class="tr-bar" id="trBar">
+    <span class="tr-status" id="trStatus"></span>
+    <button class="btn btn-ghost btn-sm" onclick="runTranslation()" id="trBtn"></button>
+  </div>
+  <div id="resCont"></div>
+  <div class="export-row" id="exportRow">
+    <button class="btn btn-ghost" onclick="goBack()" id="rBack"></button>
+    <button class="btn btn-primary" onclick="exportText()" id="rExport"></button>
+  </div>
+</div>
+
+</div>
+
+<div class="fixed-bar" id="fixedBar">
+  <div class="fixed-inner">
+    <button class="btn btn-ghost" onclick="prevStep()" id="navPrev">←</button>
+    <span class="nav-center" id="navCenter"></span>
+    <button class="btn btn-primary" onclick="nextStep()" id="navNext">→</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div id="nameModal" style="display:none"></div>
+<div id="cmtToolbar" style="display:none"></div>
+<div id="cmtPopover" style="display:none"></div>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────
+const S=[
+{id:'task',icon:'ti-checklist',en:'Task Preferences',zh:'任務偏好',q:[
+{en:'Real-time tasks (done while messaging, calling, or on video)',zh:'即時任務（在聊天、通話或視訊時立即完成）',ie:'Tasks completed in the moment while we are connected — messaging, voice, or video call.',iz:'在我們連線時當下完成的任務——傳訊、語音或視訊通話。'},
+{en:'Asynchronous tasks (done later and reported back)',zh:'非同步任務（先交付，之後完成並回報）',ie:'Tasks assigned now, completed on your own time, then reported back to me.',iz:'現在交付的任務，由你自行找時間完成，然後向我回報。'},
+{en:'Video-call tasks',zh:'視訊任務',ie:'Interactive tasks or instructions carried out over a video call.',iz:'透過視訊進行的互動任務或指令。'},
+{en:'Habit-building tasks (daily routines, rituals, long-term training)',zh:'習慣養成任務（每日儀式、規則、長期培養）',ie:'Recurring tasks that build a routine or train a habit over time.',iz:'建立日常或長期培養習慣的重複性任務。'},
+{en:'Random surprise tasks',zh:'隨機驚喜任務',ie:'Unannounced tasks delivered at unexpected moments.',iz:'沒有預告、在意外時刻交付的任務。'},
+{en:'Sexual tasks',zh:'性相關任務',ie:'Tasks that are erotic or sexual in nature.',iz:'帶有情慾或性質的任務。'},
+{en:'Non-sexual tasks',zh:'非性相關任務',ie:'Tasks with no sexual element — chores, discipline, devotion.',iz:'不含性元素的任務——雜務、紀律、奉獻。'},
+{en:'Tasks that challenge my comfort zone (within limits)',zh:'在界線內挑戰我舒適圈的任務',ie:'Tasks that gently push my boundaries without crossing negotiated limits.',iz:'在雙方同意的界線內，稍微挑戰我舒適圈的任務。'},
+]},
+{id:'subm',icon:'ti-heart-handshake',en:'My Submission Style',zh:'我的服從方式',q:[
+{en:'Happy & eager obedience',zh:'開心、主動且樂於服從',ie:'I willingly and enthusiastically follow your instructions.',iz:'我會積極且愉快地完成你的指令。'},
+{en:'Reluctant obedience (shy, but still obey)',zh:'帶著害羞或猶豫，但仍然服從',ie:'I may feel shy or hesitant, but I still obey because I trust you.',iz:'我可能會嘴上抱怨、感到害羞，但仍會因為信任你而完成。'},
+{en:'Bratty resistance (playful, wants correction)',zh:'調皮反抗（Brat），希望被引導糾正',ie:'I playfully resist or tease so you can guide, correct, or discipline me.',iz:'我會故意小小反抗，讓你可以依約定方式管教、糾正或引導我。'},
+{en:'Different situations call for different dynamics',zh:'依不同情境切換',ie:'Sometimes obedient, sometimes shy, sometimes bratty — depends on the moment.',iz:'有時乖乖服從，有時害羞，有時調皮，依當下情境決定。'},
+{en:'Other (describe in a note)',zh:'其他（請在備註說明）',ie:'A style not listed here — add a note to describe it.',iz:'不在以上選項中的方式——請在備註說明。'},
+]}
+];
+const CS={en:'Communication Preferences',zh:'互動偏好',icon:'ti-settings',q:[
+{en:'How often would you like us to play each week?',zh:'你希望我們每週互動（Play）幾次？',oe:['Daily','2–3x/week','Weekends only','Flexible'],oz:['每天','每週2–3次','僅週末','彈性']},
+{en:'Preferred time of day for our most frequent communication?',zh:'你希望我們最常互動的時間？',oe:['Morning','Afternoon','Evening','Night'],oz:['早上','下午','晚上','深夜']},
+]};
+const OS={en:'Open-Ended Questions',zh:'開放式問題',icon:'ti-pencil',q:[
+{en:'What are your top 5 fantasies?',zh:'你的五大幻想是什麼？'},
+{en:'Which BDSM activities are you most curious to explore with me?',zh:'你最想和我一起探索哪些 BDSM 活動？'},
+{en:'What are your hard limits?',zh:'你的 Hard Limits（絕對不能接受）是什麼？'},
+{en:'What are your soft limits?',zh:'你的 Soft Limits（可討論但需謹慎）是什麼？'},
+{en:'What activities would you like us to try in the next 6 months?',zh:'未來六個月，你最想和我一起嘗試哪些活動？'},
+{en:'What activities would you never want to try?',zh:'有哪些活動是你完全不想嘗試的？'},
+{en:'What makes you feel most fulfilled as my Dominant?',zh:'什麼會讓你最有身為我 Dom／主人的滿足感？'},
+{en:'What kind of submission from me is most satisfying to you?',zh:'我展現什麼樣的服從，最能讓你感到滿足？'},
+{en:'What are your biggest concerns regarding BDSM play?',zh:'你對 BDSM 實踐最大的顧慮是什麼？'},
+{en:'What would your ideal long-distance BDSM dynamic with me look like?',zh:'你理想中的遠距離 BDSM 關係是什麼樣子？'},
+]};
+const UI={en:{title:'BDSM Preferences (For My Dom)',sub:'Rate your interest (1–10). Tap <i class="ti ti-info-circle" style="font-size:13px"></i> for info. Add notes or use voice. 0 = skip.',addN:'+ Note',hideN:'− Note',nPh:'Add a note...',oPh:'Your answer...',step:'Step',of:'of',next:'Next →',prev:'← Back',submit:'View results →',clear:'Clear all',filled:'rated',sortD:'Original order',sortH:'Score ↓',sortL:'Score ↑',share:'Share',shareOk:'Link copied!',resT:'Preferences Summary',back:'← Edit',exp:'Copy text',trN:'Translate your notes to',trBtn:'Translate now',trL:'Translating...',trOk:'Translated',trF:'Translation failed',copied:'Copied!',clrC:'Clear all responses?',micS:'Listening...',micE:'Voice not available — use HTTPS',micD:'Mic access denied',shV:'Viewing shared results',cmtAdd:'Comment',cmtYou:'You',cmtThem:'Partner',cmtReply:'Reply...',cmtSend:'Send',cmtResolve:'Resolve',cmtReopen:'Reopen',cmtDelete:'Delete',cmtSendBack:'Send replies back',cmtSendBackHint:'Copy a link with your comments to send back',cmtLinkCopied:'Comment link copied — send it back!',cmtRoleOwner:'You created this survey',cmtRoleViewer:'You are viewing & commenting',cmtViewerBadge:'Commenter',cmtOwnerBadge:'Owner',cmtSelectHint:'Select text or tap a score to comment',cmtNone:'No comments yet',cmtWho:'Commenting as',cmtPick:'Who are you?',cmtChange:'change',cmtModalHint:'Pick your name so comments are labelled correctly',cmtRefresh:'Refresh',cmtRefreshing:'Refreshing...',cmtRefreshed:'Updated'},zh:{title:'BDSM 偏好調查（給我的主人）',sub:'為每項活動評分（1–10）。點擊 <i class="ti ti-info-circle" style="font-size:13px"></i> 查看說明。0 = 跳過。',addN:'+ 備註',hideN:'− 備註',nPh:'輸入備註...',oPh:'輸入你的回答...',step:'第',of:'步，共',next:'下一步 →',prev:'← 上一步',submit:'查看結果 →',clear:'清除全部',filled:'已評分',sortD:'原始順序',sortH:'分數 ↓',sortL:'分數 ↑',share:'分享',shareOk:'連結已複製！',resT:'偏好摘要',back:'← 返回編輯',exp:'複製文字',trN:'將備註翻譯為',trBtn:'立即翻譯',trL:'翻譯中...',trOk:'翻譯完成',trF:'翻譯失敗',copied:'已複製！',clrC:'確定清除所有回答？',micS:'聆聽中...',micE:'語音不可用——請使用 HTTPS',micD:'麥克風被拒',shV:'正在查看分享的結果',cmtAdd:'留言',cmtYou:'你',cmtThem:'對方',cmtReply:'回覆...',cmtSend:'送出',cmtResolve:'標記完成',cmtReopen:'重新開啟',cmtDelete:'刪除',cmtSendBack:'產生回傳連結',cmtSendBackHint:'複製含你留言的連結傳回去',cmtLinkCopied:'留言連結已複製——傳回去吧！',cmtRoleOwner:'你是這份問卷的建立者',cmtRoleViewer:'你正在查看與留言',cmtViewerBadge:'留言者',cmtOwnerBadge:'建立者',cmtSelectHint:'圈選文字或點分數即可留言',cmtNone:'尚無留言',cmtWho:'目前身分',cmtPick:'你是誰？',cmtChange:'切換',cmtModalHint:'選擇你的名字，留言才會標上正確的人',cmtRefresh:'重新整理',cmtRefreshing:'更新中...',cmtRefreshed:'已更新'}};
+
+let lang='en',curStep=0,ratings={},notes={},commA={},openA={},trToEn={},trToZh={},sortMode='default',totalQ=0,activeRec=null,comments=[],cmtName='',cmtSeq=0;
+const NAMES=['Julian','Rita'];
+
+// ─── CLOUD STORAGE (Supabase) ─────────────────────────────────────────
+// Fill these in with your own Supabase project values (see setup guide):
+const SUPABASE_URL='https://YOUR_PROJECT.supabase.co';
+const SUPABASE_KEY='YOUR_ANON_KEY';
+const CLOUD_ON = !SUPABASE_URL.includes('YOUR_PROJECT');
+let surveyId=null; // current cloud row id
+
+function shortId(){ return Math.random().toString(36).slice(2,8); }
+
+async function cloudSave(){
+  const id=surveyId||shortId();
+  const payload={id, data:{ratings,notes,commA,openA,lang}, comments};
+  const r=await fetch(`${SUPABASE_URL}/rest/v1/surveys`,{
+    method:'POST',
+    headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Prefer':'resolution=merge-duplicates'},
+    body:JSON.stringify(payload)
+  });
+  if(!r.ok) throw new Error('save '+r.status);
+  surveyId=id;
+  return id;
+}
+async function cloudLoad(id){
+  const r=await fetch(`${SUPABASE_URL}/rest/v1/surveys?id=eq.${encodeURIComponent(id)}&select=*`,{
+    headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}
+  });
+  if(!r.ok) throw new Error('load '+r.status);
+  const rows=await r.json();
+  if(!rows.length) throw new Error('not found');
+  return rows[0];
+}
+async function cloudSaveComments(){
+  if(!surveyId||!CLOUD_ON) return;
+  await fetch(`${SUPABASE_URL}/rest/v1/surveys?id=eq.${encodeURIComponent(surveyId)}`,{
+    method:'PATCH',
+    headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY},
+    body:JSON.stringify({comments})
+  }).catch(()=>{});
+}
+const STEPS=S.map(s=>({type:'rated',data:s}));
+STEPS.push({type:'comm',data:CS});
+STEPS.push({type:'open',data:OS});
+const TOTAL_STEPS=STEPS.length;
+totalQ=S.reduce((a,s)=>a+s.q.length,0);
+
+function T(k){return UI[lang][k]||UI.en[k]}
+function TQ(o){return o[lang]||o.en}
+function setLang(l){
+  lang=l;
+  ['btnEn','rBtnEn'].forEach(i=>{const e=document.getElementById(i);if(e)e.classList.toggle('active',l==='en')});
+  ['btnZh','rBtnZh'].forEach(i=>{const e=document.getElementById(i);if(e)e.classList.toggle('active',l==='zh')});
+  if(document.getElementById('vResults').style.display!=='none'){updateResultsUI();buildResults();}
+  else renderStep();
+}
+
+// ─── STEP NAV ─────────────────────────────────────────────────────────
+function renderStep(){
+  document.getElementById('sTitle').textContent=T('title');
+  document.getElementById('sSub').innerHTML=T('sub');
+  const stepEn=`${T('step')} ${curStep+1} ${T('of')} ${TOTAL_STEPS}`;
+  document.getElementById('stepLabel').textContent=lang==='zh'?`${T('step')} ${curStep+1} ${T('of')} ${TOTAL_STEPS} 步`:stepEn;
+  const rated=Object.values(ratings).filter(v=>v>0).length;
+  document.getElementById('stepFilled').textContent=`${rated}/${totalQ} ${T('filled')}`;
+  document.getElementById('progBar').style.width=Math.round(rated/totalQ*100)+'%';
+  // dots
+  const dots=document.getElementById('stepDots');
+  dots.innerHTML='';
+  for(let i=0;i<TOTAL_STEPS;i++){
+    const d=document.createElement('span');
+    d.className='step-dot'+(i===curStep?' active':hasStepData(i)?' done':'');
+    d.onclick=()=>{curStep=i;renderStep();window.scrollTo(0,0)};
+    dots.appendChild(d);
+  }
+  // content
+  const cont=document.getElementById('stepContent');
+  cont.innerHTML='';
+  const step=STEPS[curStep];
+  if(step.type==='rated') renderRatedStep(cont,step.data);
+  else if(step.type==='comm') renderCommStep(cont,step.data);
+  else renderOpenStep(cont,step.data);
+  // nav bar
+  document.getElementById('navPrev').style.visibility=curStep>0?'visible':'hidden';
+  document.getElementById('navPrev').textContent=T('prev');
+  const isLast=curStep===TOTAL_STEPS-1;
+  document.getElementById('navNext').textContent=isLast?T('submit'):T('next');
+  document.getElementById('navCenter').textContent=`${curStep+1} / ${TOTAL_STEPS}`;
+}
+
+function hasStepData(i){
+  const step=STEPS[i];
+  if(step.type==='rated') return step.data.q.some((_,qi)=>ratings[step.data.id+'_'+qi]>0);
+  if(step.type==='comm') return Object.keys(commA).length>0;
+  return Object.keys(openA).some(k=>openA[k]&&openA[k].trim());
+}
+
+function nextStep(){
+  if(curStep<TOTAL_STEPS-1){curStep++;renderStep();window.scrollTo(0,0);}
+  else showResults();
+}
+function prevStep(){if(curStep>0){curStep--;renderStep();window.scrollTo(0,0);}}
+
+function renderRatedStep(cont,sec){
+  cont.innerHTML=`<div class="sec-head"><i class="ti ${sec.icon} sec-icon" aria-hidden="true"></i>${TQ(sec)}</div>`;
+  sec.q.forEach((q,qi)=>{
+    const id=sec.id+'_'+qi;
+    if(ratings[id]===undefined)ratings[id]=0;
+    const hasN=!!(notes[id]&&notes[id].trim());
+    const c=document.createElement('div');c.className='q-card';
+    c.innerHTML=`<div class="q-top"><span class="q-num">${qi+1}</span><span class="q-text">${TQ(q)}</span><button class="q-info" onclick="document.getElementById('tip_${id}').classList.toggle('open')"><i class="ti ti-info-circle" aria-hidden="true"></i></button></div>
+<div class="q-tip" id="tip_${id}">${lang==='zh'?(q.iz||q.ie):(q.ie||q.iz)}</div>
+<div class="rating-row"><span class="rl">0</span><input type="range" min="0" max="10" step="1" value="${ratings[id]}" oninput="R('${id}',this)"><span class="rl right">10</span><span class="r-val" id="v_${id}">${ratings[id]}</span></div>
+<button class="note-toggle" onclick="TN('${id}',this)">${hasN?T('hideN'):T('addN')}</button>
+<div class="note-area${hasN?' open':''}" id="n_${id}"><div class="note-row"><textarea placeholder="${T('nPh')}" oninput="notes['${id}']=this.value;trToEn['${id}']='';trToZh['${id}']='';">${notes[id]||''}</textarea><button class="mic-btn" onclick="mic('${id}','note')"><i class="ti ti-microphone" style="font-size:15px" aria-hidden="true"></i></button></div><div class="mic-st" id="ms_${id}"></div></div>`;
+    cont.appendChild(c);
+  });
+}
+
+function renderCommStep(cont,sec){
+  cont.innerHTML=`<div class="sec-head"><i class="ti ${sec.icon} sec-icon" aria-hidden="true"></i>${TQ(sec)}</div>`;
+  sec.q.forEach((q,qi)=>{
+    const id='comm_'+qi;
+    const hasN=!!(notes[id]&&notes[id].trim());
+    const c=document.createElement('div');c.className='comm-card';
+    const opts=q.oe.map((o,oi)=>`<button class="comm-opt${commA[qi]===oi?' sel':''}" onclick="selC(${qi},${oi},this)">${lang==='zh'?q.oz[oi]:q.oe[oi]}</button>`).join('');
+    c.innerHTML=`<div class="comm-label">${TQ(q)}</div><div class="comm-opts">${opts}</div>
+<button class="note-toggle" style="margin-left:0" onclick="TN('${id}',this)">${hasN?T('hideN'):T('addN')}</button>
+<div class="note-area${hasN?' open':''}" style="margin-left:0" id="n_${id}"><div class="note-row"><textarea placeholder="${T('nPh')}" oninput="notes['${id}']=this.value;trToEn['${id}']='';trToZh['${id}']='';">${notes[id]||''}</textarea><button class="mic-btn" onclick="mic('${id}','note')"><i class="ti ti-microphone" style="font-size:15px" aria-hidden="true"></i></button></div><div class="mic-st" id="ms_${id}"></div></div>`;
+    cont.appendChild(c);
+  });
+}
+
+function renderOpenStep(cont,sec){
+  cont.innerHTML=`<div class="sec-head"><i class="ti ${sec.icon} sec-icon" aria-hidden="true"></i>${TQ(sec)}</div>`;
+  sec.q.forEach((q,qi)=>{
+    const c=document.createElement('div');c.className='open-card';
+    c.innerHTML=`<div class="open-label">${qi+1}. ${TQ(q)}</div><div class="open-row"><textarea class="open-ta" placeholder="${T('oPh')}" oninput="openA[${qi}]=this.value;trToEn['o${qi}']='';trToZh['o${qi}']='';">${openA[qi]||''}</textarea><button class="mic-btn" onclick="mic('open_${qi}','open')"><i class="ti ti-microphone" style="font-size:15px" aria-hidden="true"></i></button></div><div class="mic-st" id="ms_open_${qi}"></div>`;
+    cont.appendChild(c);
+  });
+}
+
+function R(id,el){ratings[id]=+el.value;document.getElementById('v_'+id).textContent=ratings[id];const r=Object.values(ratings).filter(v=>v>0).length;document.getElementById('stepFilled').textContent=`${r}/${totalQ} ${T('filled')}`;document.getElementById('progBar').style.width=Math.round(r/totalQ*100)+'%';document.querySelectorAll('.step-dot')[curStep].classList.add('done');}
+function TN(id,btn){const a=document.getElementById('n_'+id);const o=a.classList.toggle('open');btn.textContent=o?T('hideN'):T('addN');}
+function selC(qi,oi,btn){commA[qi]=oi;btn.closest('.comm-opts').querySelectorAll('.comm-opt').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');}
+
+// ─── VOICE ────────────────────────────────────────────────────────────
+function mic(id,type){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR||!window.isSecureContext){toast(T('micE'),4000);return;}
+  if(activeRec){try{activeRec.stop();}catch(e){}activeRec=null;}
+  const r=new SR();r.lang=lang==='zh'?'zh-TW':'en-US';r.interimResults=false;
+  const st=document.getElementById('ms_'+id);
+  const mb=document.querySelector(`[onclick="mic('${id}','${type}')"]`);
+  if(mb)mb.classList.add('recording');
+  if(st){st.textContent=T('micS');st.className='mic-st on';}
+  activeRec=r;
+  r.onresult=e=>{
+    const tx=e.results[0][0].transcript;
+    if(type==='open'){const qi=+id.replace('open_','');const tas=document.querySelectorAll('.open-ta');if(tas[qi]){tas[qi].value+=(tas[qi].value?' ':'')+tx;openA[qi]=tas[qi].value;trToEn['o'+qi]='';trToZh['o'+qi]='';}}
+    else{const ta=document.querySelector('#n_'+id+' textarea');if(ta){ta.value+=(ta.value?' ':'')+tx;notes[id]=ta.value;trToEn[id]='';trToZh[id]='';}}
+  };
+  r.onend=()=>{if(mb)mb.classList.remove('recording');if(st){st.textContent='';st.className='mic-st';}activeRec=null;};
+  r.onerror=e=>{if(mb)mb.classList.remove('recording');if(st){st.textContent='';st.className='mic-st';}toast(e.error==='not-allowed'?T('micD'):T('micE'),3000);activeRec=null;};
+  try{r.start();}catch(e){toast(T('micE'),4000);}
+}
+
+// ─── TRANSLATION (MyMemory — free, no key) ────────────────────────────
+async function tr1(text,lp){
+  const r=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${lp}`);
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  const d=await r.json();
+  if(d.responseStatus===200&&d.responseData?.translatedText){
+    let t=d.responseData.translatedText;
+    if(t===t.toUpperCase()&&text!==text.toUpperCase())t=t.charAt(0).toUpperCase()+t.slice(1).toLowerCase();
+    return t;
+  }
+  throw new Error(d.responseDetails||'fail');
+}
+
+async function runTranslation(){
+  const btn=document.getElementById('trBtn');
+  const st=document.getElementById('trStatus');
+  btn.disabled=true;btn.textContent=T('trL');
+  const toZh=lang==='zh';
+  const lp=toZh?'en|zh-TW':'zh-TW|en';
+  const store=toZh?trToZh:trToEn;
+  const jobs=[];
+  S.forEach(sec=>{sec.q.forEach((_,qi)=>{const id=sec.id+'_'+qi;if(notes[id]&&notes[id].trim()&&!store[id])jobs.push({k:id,t:notes[id]});});});
+  CS.q.forEach((_,qi)=>{const id='comm_'+qi;if(notes[id]&&notes[id].trim()&&!store[id])jobs.push({k:id,t:notes[id]});});
+  OS.q.forEach((_,qi)=>{const k='o'+qi;if(openA[qi]&&openA[qi].trim()&&!store[k])jobs.push({k,t:openA[qi]});});
+  if(!jobs.length){st.textContent=T('trOk');btn.disabled=false;btn.textContent=T('trBtn');buildResults();return;}
+  let done=0,fail=0;
+  st.textContent=`${T('trL')} (0/${jobs.length})`;
+  for(const j of jobs){
+    try{store[j.k]=await tr1(j.t,lp);done++;}catch(e){fail++;}
+    st.textContent=`${T('trL')} (${done+fail}/${jobs.length})`;
+  }
+  st.textContent=fail>0?`${T('trOk')} (${fail} failed)`:T('trOk');
+  btn.disabled=false;btn.textContent=T('trBtn');
+  buildResults();
+}
+
+// ─── RESULTS ──────────────────────────────────────────────────────────
+function showResults(){
+  document.getElementById('vSurvey').style.display='none';
+  document.getElementById('fixedBar').style.display='none';
+  document.getElementById('vResults').style.display='block';
+  updateResultsUI();buildResults();window.scrollTo(0,0);
+  if(!cmtName) showNameModal();
+}
+function goBack(){
+  document.getElementById('vResults').style.display='none';
+  document.getElementById('vSurvey').style.display='block';
+  document.getElementById('fixedBar').style.display='block';
+  renderStep();window.scrollTo(0,0);
+}
+function updateResultsUI(){
+  document.getElementById('rTitle').textContent=T('resT');
+  document.getElementById('rBack').textContent=T('back');
+  document.getElementById('rExport').textContent=T('exp');
+  document.getElementById('shareLbl').textContent=T('share');
+  updateSortLabel();
+  const tgt=lang==='zh'?'中文':'English';
+  document.getElementById('trStatus').textContent=`${T('trN')} ${tgt}`;
+  document.getElementById('trBtn').textContent=T('trBtn');
+}
+function toggleSort(){sortMode=sortMode==='default'?'high':sortMode==='high'?'low':'default';updateSortLabel();buildResults();}
+function updateSortLabel(){document.getElementById('sortLbl').textContent=sortMode==='high'?T('sortH'):sortMode==='low'?T('sortL'):T('sortD');}
+
+function buildResults(){
+  const cont=document.getElementById('resCont');cont.innerHTML='';
+  const vals=Object.values(ratings).filter(v=>v>0);
+  const avg=vals.length?(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1):0;
+  document.getElementById('rMeta').textContent=lang==='zh'?`已回答 ${vals.length}/${totalQ} 題 · 平均 ${avg}/10`:`${vals.length} of ${totalQ} rated · Avg ${avg}/10`;
+  const store=lang==='zh'?trToZh:trToEn;
+  S.forEach(sec=>{
+    let items=sec.q.map((q,qi)=>({q,id:sec.id+'_'+qi,score:ratings[sec.id+'_'+qi]||0})).filter(x=>x.score>0);
+    if(!items.length)return;
+    if(sortMode==='high')items=[...items].sort((a,b)=>b.score-a.score);
+    else if(sortMode==='low')items=[...items].sort((a,b)=>a.score-b.score);
+    const blk=document.createElement('div');blk.className='res-sec';
+    blk.innerHTML=`<div class="res-sec-title">${TQ(sec)}</div>`;
+    items.forEach(({q,id,score})=>{
+      const it=document.createElement('div');it.className='res-item';
+      const n=notes[id],tr=store[id];
+      it.innerHTML=`<div style="flex:1" data-anchor="${id}"><div class="res-qtext">${TQ(q)}</div>${n?`<div class="res-note">${n}</div>`:''}${tr?`<div class="res-note-tr">↳ ${tr}</div>`:''}</div><div class="score-wrap" data-anchor="${id}__score"><div class="score-bar-bg"><div class="score-bar" style="width:${Math.round(score/10*100)}%"></div></div><span class="score-num ${score>=8?'score-high':''}" data-scorecmt="${id}__score" data-scoreval="${score}">${score}</span></div>`;
+      blk.appendChild(it);
+    });
+    cont.appendChild(blk);
+  });
+  const commHasNotes=CS.q.some((_,qi)=>notes['comm_'+qi]&&notes['comm_'+qi].trim());
+  if(Object.keys(commA).length||commHasNotes){
+    const blk=document.createElement('div');blk.className='res-sec';
+    blk.innerHTML=`<div class="res-sec-title">${TQ(CS)}</div>`;
+    CS.q.forEach((q,qi)=>{if(commA[qi]===undefined&&!(notes['comm_'+qi]&&notes['comm_'+qi].trim()))return;const ans=commA[qi]!==undefined?(lang==='zh'?q.oz[commA[qi]]:q.oe[commA[qi]]):'—';const id='comm_'+qi;const n=notes[id],tr=store[id];const it=document.createElement('div');it.className='res-item';it.innerHTML=`<div style="flex:1" data-anchor="${id}"><div class="res-qtext">${TQ(q)}</div>${n?`<div class="res-note">${n}</div>`:''}${tr?`<div class="res-note-tr">↳ ${tr}</div>`:''}</div><span class="score-num" data-anchor="${id}__ans" data-scorecmt="${id}__ans" data-scoreval="${escapeHtml(ans)}" style="font-size:13px;font-weight:500;white-space:nowrap;flex-shrink:0;padding-top:2px">${ans}</span>`;blk.appendChild(it);});
+    cont.appendChild(blk);
+  }
+  let hasO=false;const oblk=document.createElement('div');oblk.className='res-sec';
+  OS.q.forEach((q,qi)=>{if(!openA[qi])return;hasO=true;const tr=store['o'+qi];const it=document.createElement('div');it.className='res-item';it.style.cssText='flex-direction:column;align-items:flex-start';it.innerHTML=`<div class="res-qtext" style="margin-bottom:5px">${TQ(q)}</div><div data-anchor="o${qi}" style="width:100%"><div class="open-ans">${openA[qi]}</div>${tr?`<div class="open-ans-tr">↳ ${tr}</div>`:''}</div>`;oblk.appendChild(it);});
+  if(hasO){oblk.insertAdjacentHTML('afterbegin',`<div class="res-sec-title">${TQ(OS)}</div>`);cont.appendChild(oblk);}
+  applyHighlights();
+  updateCmtBar();
+}
+
+// ─── COMMENTS (Figma-style, link-synced) ──────────────────────────────
+function isCommentMode(){ return document.getElementById('vResults').style.display!=='none'; }
+
+// give every result text node a stable anchor id during buildResults
+let anchorCounter=0;
+function anchorId(){ return 'a'+(anchorCounter++); }
+
+// after results are built, re-apply all highlights
+function applyHighlights(){
+  // clear popover/toolbar
+  hidePopover(); hideToolbar();
+  document.querySelectorAll('.score-num.has-cmt').forEach(el=>el.classList.remove('has-cmt'));
+  comments.forEach(c=>{
+    if(c.scoreCmt){
+      const el=document.querySelector(`[data-scorecmt="${c.anchor}"]`);
+      if(!el) return;
+      el.classList.add('has-cmt');
+      if(!el.parentNode.querySelector(`.cmt-pin[data-cmt="${c.id}"]`)){
+        const pin=document.createElement('span');
+        pin.className='cmt-pin';pin.textContent=c.thread.length;pin.setAttribute('data-cmt',c.id);
+        el.after(pin);
+        el.onclick=pin.onclick=(ev)=>{ ev.stopPropagation(); openThread(c.id,ev); };
+      }
+      return;
+    }
+    const host=document.querySelector(`[data-anchor="${c.anchor}"]`);
+    if(!host) return;
+    highlightInNode(host,c);
+  });
+}
+
+function highlightInNode(host,c){
+  // find c.quote within host's text and wrap it
+  const walker=document.createTreeWalker(host,NodeFilter.SHOW_TEXT,null);
+  let node;
+  while(node=walker.nextNode()){
+    const idx=node.nodeValue.indexOf(c.quote);
+    if(idx>=0){
+      const range=document.createRange();
+      range.setStart(node,idx);
+      range.setEnd(node,idx+c.quote.length);
+      const span=document.createElement('span');
+      span.className='cmt-highlight'+(c.resolved?' resolved':'');
+      span.setAttribute('data-cmt',c.id);
+      try{ range.surroundContents(span); }catch(e){ return; }
+      const pin=document.createElement('span');
+      pin.className='cmt-pin';
+      pin.textContent=c.thread.length;
+      pin.setAttribute('data-cmt',c.id);
+      span.after(pin);
+      span.onclick=pin.onclick=(ev)=>{ ev.stopPropagation(); openThread(c.id,ev); };
+      return;
+    }
+  }
+}
+
+// text selection → floating "Comment" button
+function onResultMouseUp(ev){
+  if(!isCommentMode()) return;
+  setTimeout(()=>{
+    const sel=window.getSelection();
+    if(!sel||sel.isCollapsed||!sel.toString().trim()){ hideToolbar(); return; }
+    const text=sel.toString().trim();
+    if(text.length<2||text.length>120){ hideToolbar(); return; }
+    // find anchored host
+    let host=sel.anchorNode;
+    while(host&&host.nodeType===3) host=host.parentNode;
+    let anchorEl=host&&host.closest&&host.closest('[data-anchor]');
+    if(!anchorEl){ hideToolbar(); return; }
+    const rect=sel.getRangeAt(0).getBoundingClientRect();
+    showToolbar(rect,anchorEl.getAttribute('data-anchor'),text);
+  },10);
+}
+
+function showToolbar(rect,anchor,text){
+  const tb=document.getElementById('cmtToolbar');
+  tb.className='cmt-sel-toolbar';
+  tb.style.display='flex';
+  tb.innerHTML=`<i class="ti ti-message-plus" aria-hidden="true"></i>${T('cmtAdd')}`;
+  const top=rect.top-44<8?rect.bottom+8:rect.top-44;
+  tb.style.left=Math.max(8,Math.min(rect.left,window.innerWidth-130))+'px';
+  tb.style.top=top+'px';
+  tb.onclick=()=>{ newComment(anchor,text); };
+}
+function hideToolbar(){ const tb=document.getElementById('cmtToolbar'); if(tb) tb.style.display='none'; }
+
+let draftComment=null;
+function newComment(anchor,quote){
+  hideToolbar();
+  // draft — not committed to comments[] until a message is sent
+  draftComment={id:'c'+(cmtSeq++),anchor,quote,resolved:false,thread:[]};
+  window.getSelection().removeAllRanges();
+  const host=document.querySelector(`[data-anchor="${anchor}"]`);
+  const rect=host?host.getBoundingClientRect():{left:40,bottom:120,top:120};
+  openThread(draftComment.id,{clientX:rect.left,clientY:rect.bottom});
+}
+
+function findComment(id){
+  if(draftComment&&draftComment.id===id) return draftComment;
+  return comments.find(x=>x.id===id);
+}
+
+function openThread(id,ev){
+  const c=findComment(id);
+  if(!c) return;
+  const pop=document.getElementById('cmtPopover');
+  pop.className='cmt-popover';
+  pop.style.display='block';
+  const isDraft=draftComment&&draftComment.id===id;
+  const msgs=c.thread.map(m=>{
+    const isFirst=m.by===NAMES[0];
+    const dot=isFirst?'#3a8ddd':'#d4537e';
+    const cls=isFirst?'name0':'name1';
+    return `<div class="cmt-msg"><div class="cmt-author ${cls}"><span class="cmt-dot" style="background:${dot}"></span>${escapeHtml(m.by)}</div><div class="cmt-text">${escapeHtml(m.text)}</div></div>`;
+  }).join('') || `<div class="cmt-text" style="color:var(--text3);padding:6px 0">${T('cmtNone')}</div>`;
+  pop.innerHTML=`
+    <div class="cmt-pop-head"><div class="cmt-pop-quote">"${escapeHtml(c.quote)}"</div></div>
+    <div class="cmt-thread" id="cmtThread">${msgs}</div>
+    <div class="cmt-input-row">
+      <textarea class="cmt-input" id="cmtInput" placeholder="${T('cmtReply')}"></textarea>
+      <button class="cmt-send" onclick="postReply('${c.id}')">${T('cmtSend')}</button>
+    </div>
+    ${isDraft?'':`<div class="cmt-actions">
+      <button class="cmt-act-btn" onclick="toggleResolve('${c.id}')"><i class="ti ti-${c.resolved?'rotate':'check'}" aria-hidden="true"></i>${c.resolved?T('cmtReopen'):T('cmtResolve')}</button>
+      <button class="cmt-act-btn" onclick="deleteComment('${c.id}')"><i class="ti ti-trash" aria-hidden="true"></i>${T('cmtDelete')}</button>
+    </div>`}`;
+  const px=ev&&ev.clientX!=null?ev.clientX:80;
+  const py=ev&&ev.clientY!=null?ev.clientY:120;
+  pop.style.left=Math.max(8,Math.min(px,window.innerWidth-312))+'px';
+  pop.style.top=Math.min(py+6,window.innerHeight-300)+'px';
+  const inp=document.getElementById('cmtInput');
+  if(inp){ inp.focus(); inp.onkeydown=(e)=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); postReply(c.id);} }; }
+}
+function hidePopover(){ const p=document.getElementById('cmtPopover'); if(p) p.style.display='none'; draftComment=null; }
+
+function postReply(id){
+  const c=findComment(id);
+  const inp=document.getElementById('cmtInput');
+  if(!c||!inp||!inp.value.trim()) return;
+  if(!cmtName){ pendingReply={id,text:inp.value.trim()}; askName(); return; }
+  c.thread.push({by:cmtName,text:inp.value.trim()});
+  // commit draft into comments[] now that it has a message
+  if(draftComment&&draftComment.id===id){ comments.push(draftComment); draftComment=null; }
+  applyHighlights();
+  openThread(id,{clientX:parseInt(document.getElementById('cmtPopover').style.left),clientY:parseInt(document.getElementById('cmtPopover').style.top)});
+  updateCmtBar();
+  cloudSaveComments();
+}
+let pendingReply=null;
+function askName(){
+  const pop=document.getElementById('cmtPopover');
+  pop.className='cmt-popover';pop.style.display='block';
+  pop.innerHTML=`<div class="cmt-pop-head">${T('cmtPick')}</div><div style="padding:14px;display:flex;gap:8px">${NAMES.map((n,i)=>`<button class="comm-opt" style="flex:1;padding:10px;border-radius:var(--r)" onclick="setCmtName('${n}')"><span class="cmt-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${i===0?'#3a8ddd':'#d4537e'};margin-right:6px"></span>${n}</button>`).join('')}</div>`;
+}
+function setCmtName(n){
+  cmtName=n;
+  updateCmtBar();
+  if(pendingReply){
+    const pr=pendingReply;pendingReply=null;
+    const c=findComment(pr.id);
+    if(c){ c.thread.push({by:cmtName,text:pr.text}); if(draftComment&&draftComment.id===pr.id){ comments.push(draftComment); draftComment=null; } applyHighlights(); openThread(pr.id,{clientX:80,clientY:140}); }
+  } else { hidePopover(); }
+}
+function showNameModal(){
+  const m=document.getElementById('nameModal');
+  m.style.display='block';
+  m.innerHTML=`<div class="name-modal-bg"><div class="name-modal"><h3>${T('cmtPick')}</h3><p>${T('cmtModalHint')}</p><div class="name-modal-btns">${NAMES.map((n,i)=>`<button class="name-modal-btn" style="border-color:${i===0?'#85b7eb':'#ed93b1'}" onclick="pickEntryName('${n}')"><span class="dot" style="background:${i===0?'#1f6fc0':'#c2456e'}"></span>${n}</button>`).join('')}</div></div></div>`;
+}
+function pickEntryName(n){
+  cmtName=n;
+  document.getElementById('nameModal').style.display='none';
+  updateCmtBar();
+}
+function toggleResolve(id){ const c=comments.find(x=>x.id===id); if(c){ c.resolved=!c.resolved; hidePopover(); applyHighlights(); updateCmtBar(); cloudSaveComments(); } }
+function deleteComment(id){ comments=comments.filter(x=>x.id!==id); hidePopover(); applyHighlights(); updateCmtBar(); cloudSaveComments(); }
+function escapeHtml(s){ return s.replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); }
+
+function updateCmtBar(){
+  const bar=document.getElementById('cmtRoleBar');
+  if(!bar) return;
+  bar.style.display='flex';
+  let badge;
+  if(cmtName){
+    const i=NAMES.indexOf(cmtName);
+    const col=i===0?'#1f6fc0':'#c2456e';
+    badge=`<span class="cmt-role-badge" style="background:${i===0?'#e6f1fb':'#fbeaf0'};color:${col}">${cmtName}</span><button class="cmt-name-change" onclick="cmtName='';updateCmtBar();">${T('cmtChange')}</button>`;
+  } else {
+    badge=`<span style="font-size:12px;color:var(--text2)">${T('cmtPick')}</span>`+NAMES.map((n,i)=>`<button class="cmt-name-pick" style="border-color:${i===0?'#85b7eb':'#ed93b1'}" onclick="setCmtName('${n}')"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${i===0?'#1f6fc0':'#c2456e'};margin-right:5px"></span>${n}</button>`).join('');
+  }
+  const open=comments.filter(c=>!c.resolved).length;
+  const total=comments.length;
+  let rightBtn;
+  if(CLOUD_ON&&surveyId){
+    rightBtn=`<button class="share-btn" onclick="refreshComments()"><i class="ti ti-refresh" aria-hidden="true"></i>${T('cmtRefresh')}</button>`;
+  } else {
+    rightBtn=total?`<button class="share-btn" onclick="sendCommentsBack()"><i class="ti ti-send" aria-hidden="true"></i>${T('cmtSendBack')}</button>`:'';
+  }
+  bar.innerHTML=`${badge}<span style="color:var(--text3);font-size:12px">${total||!cmtName?'':T('cmtSelectHint')}</span>${total?`<span class="cmt-count-badge"><i class="ti ti-message" aria-hidden="true"></i>${open}/${total}</span>`:''}<span style="flex:1"></span>${rightBtn}`;
+}
+async function refreshComments(){
+  if(!surveyId) return;
+  try{
+    toast(T('cmtRefreshing'),1200);
+    const row=await cloudLoad(surveyId);
+    comments=row.comments||[];
+    cmtSeq=comments.reduce((m,c)=>Math.max(m,parseInt((c.id||'c0').slice(1))+1),0);
+    applyHighlights();updateCmtBar();
+    toast(T('cmtRefreshed'));
+  }catch(e){ toast(T('trF'),3000); }
+}
+
+// click on a score number or comm answer → comment on it
+function onScoreClick(e){
+  if(!isCommentMode()) return;
+  const el=e.target.closest('[data-scorecmt]');
+  if(!el) return;
+  e.stopPropagation();
+  const anchor=el.getAttribute('data-scorecmt');
+  // existing committed comment for this anchor?
+  const existing=comments.find(c=>c.scoreCmt&&c.anchor===anchor);
+  if(existing){ openThread(existing.id,e); return; }
+  const val=el.getAttribute('data-scoreval');
+  // draft — committed only when a message is posted
+  draftComment={id:'c'+(cmtSeq++),anchor,quote:(lang==='zh'?'評分 ':'Rating ')+val,scoreCmt:true,resolved:false,thread:[]};
+  openThread(draftComment.id,e);
+}
+
+// global listeners
+document.addEventListener('click',onScoreClick,true);
+document.addEventListener('mouseup',onResultMouseUp);
+document.addEventListener('touchend',onResultMouseUp);
+document.addEventListener('mousedown',(e)=>{
+  const pop=document.getElementById('cmtPopover');
+  const tb=document.getElementById('cmtToolbar');
+  if(pop&&pop.style.display!=='none'&&!pop.contains(e.target)&&!(e.target.closest&&e.target.closest('.cmt-highlight,.cmt-pin'))) hidePopover();
+  if(tb&&!tb.contains(e.target)) {/* toolbar handled by its own click */}
+});
+
+
+function encodeState(extra){
+  const state=Object.assign({ratings,notes,commA,openA,lang,comments,cmtSeq,_name:cmtName},extra||{});
+  return btoa(encodeURIComponent(JSON.stringify(state)));
+}
+async function shareResults(){
+  if(CLOUD_ON){
+    try{
+      toast(lang==='zh'?'儲存中...':'Saving...',1500);
+      const id=await cloudSave();
+      const url=`${location.origin}${location.pathname}?id=${id}`;
+      copyUrl(url,T('shareOk'));
+      return;
+    }catch(e){ toast((lang==='zh'?'雲端儲存失敗，改用長連結':'Cloud failed, using long link'),3000); }
+  }
+  const url=`${location.origin}${location.pathname}?s=${encodeState({_name:''})}`;
+  copyUrl(url,T('shareOk'));
+}
+async function sendCommentsBack(){
+  if(CLOUD_ON&&surveyId){
+    try{
+      await cloudSaveComments();
+      const url=`${location.origin}${location.pathname}?id=${surveyId}`;
+      copyUrl(url,T('cmtLinkCopied'),4000);
+      return;
+    }catch(e){}
+  }
+  if(CLOUD_ON){
+    try{ const id=await cloudSave(); const url=`${location.origin}${location.pathname}?id=${id}`; copyUrl(url,T('cmtLinkCopied'),4000); return; }catch(e){}
+  }
+  const url=`${location.origin}${location.pathname}?s=${encodeState({_name:''})}`;
+  copyUrl(url,T('cmtLinkCopied'),4000);
+}
+function copyUrl(url,msg,dur){
+  if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(url).then(()=>toast(msg,dur)).catch(()=>fbCopy(url,msg));
+  else fbCopy(url,msg);
+}
+function fbCopy(url,msg){const t=document.createElement('textarea');t.value=url;t.style.cssText='position:fixed;opacity:0';document.body.appendChild(t);t.select();try{document.execCommand('copy');toast(msg||T('shareOk'));}catch(e){toast('Copy URL manually',4000);}document.body.removeChild(t);}
+
+// load from long URL (?s=) — legacy/fallback
+function loadShared(){
+  const p=new URLSearchParams(location.search);
+  const d=p.get('s');if(!d)return false;
+  try{
+    const st=JSON.parse(decodeURIComponent(atob(d)));
+    ratings=st.ratings||{};notes=st.notes||{};commA=st.commA||{};openA=st.openA||{};
+    if(st.lang)lang=st.lang;
+    comments=st.comments||[];
+    cmtSeq=st.cmtSeq||0;
+    cmtName=st._name||'';
+    return true;
+  }catch(e){return false;}
+}
+// load from cloud short link (?id=)
+async function loadCloud(id){
+  const row=await cloudLoad(id);
+  const d=row.data||{};
+  ratings=d.ratings||{};notes=d.notes||{};commA=d.commA||{};openA=d.openA||{};
+  if(d.lang)lang=d.lang;
+  comments=row.comments||[];
+  cmtSeq=comments.reduce((m,c)=>Math.max(m,parseInt((c.id||'c0').slice(1))+1),0);
+  surveyId=id;
+  cmtName='';
+}
+
+function exportText(){
+  let t=(lang==='zh'?'BDSM 遠距偏好結果':'BDSM Preferences Results')+'\n\n';
+  const store=lang==='zh'?trToZh:trToEn;
+  S.forEach(sec=>{let items=sec.q.map((q,qi)=>({q,id:sec.id+'_'+qi,score:ratings[sec.id+'_'+qi]||0})).filter(x=>x.score>0);if(sortMode==='high')items.sort((a,b)=>b.score-a.score);else if(sortMode==='low')items.sort((a,b)=>a.score-b.score);if(!items.length)return;t+=`== ${TQ(sec)} ==\n`;items.forEach(({q,id,score})=>{t+=`[${score}/10] ${TQ(q)}`;if(notes[id])t+=`\n  ${notes[id]}`;if(store[id])t+=`\n  (${store[id]})`;t+='\n';});t+='\n';});
+  const commLines=CS.q.map((q,qi)=>{const id='comm_'+qi;if(commA[qi]===undefined&&!(notes[id]&&notes[id].trim()))return null;const ans=commA[qi]!==undefined?(lang==='zh'?q.oz[commA[qi]]:q.oe[commA[qi]]):'—';let line=`${TQ(q)}: ${ans}`;if(notes[id])line+=`\n  ${notes[id]}`;if(store[id])line+=`\n  (${store[id]})`;return line;}).filter(Boolean);
+  if(commLines.length){t+=`== ${TQ(CS)} ==\n`+commLines.join('\n')+'\n\n';}
+  if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).then(()=>toast(T('copied')));
+  else{const ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast(T('copied'));}catch(e){}document.body.removeChild(ta);}
+}
+
+function clearAll(){if(!confirm(T('clrC')))return;ratings={};notes={};commA={};openA={};trToEn={};trToZh={};curStep=0;renderStep();}
+let toastT=null;function toast(m,d=2200){const e=document.getElementById('toast');e.textContent=m;e.classList.add('show');if(toastT)clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('show'),d);}
+
+// ─── INIT ─────────────────────────────────────────────────────────────
+function enterSharedView(){
+  ['btnEn','rBtnEn'].forEach(i=>{const e=document.getElementById(i);if(e)e.classList.toggle('active',lang==='en')});
+  ['btnZh','rBtnZh'].forEach(i=>{const e=document.getElementById(i);if(e)e.classList.toggle('active',lang==='zh')});
+  document.getElementById('vSurvey').style.display='none';
+  document.getElementById('fixedBar').style.display='none';
+  document.getElementById('vResults').style.display='block';
+  document.getElementById('sharedBanner').style.display='flex';
+  document.getElementById('sharedBanner').className='shared-banner';
+  document.getElementById('sharedBanner').innerHTML=`<i class="ti ti-message-circle" aria-hidden="true"></i>${T('shV')}`;
+  document.getElementById('exportRow').querySelector('#rBack').style.display='none';
+  updateResultsUI();buildResults();
+  if(!cmtName) showNameModal();
+}
+
+(function(){
+  const p=new URLSearchParams(location.search);
+  const cloudId=p.get('id');
+  if(cloudId&&CLOUD_ON){
+    document.getElementById('vSurvey').style.display='none';
+    document.getElementById('fixedBar').style.display='none';
+    loadCloud(cloudId).then(()=>{ enterSharedView(); }).catch(()=>{
+      document.getElementById('vSurvey').style.display='block';
+      document.getElementById('fixedBar').style.display='block';
+      toast(lang==='zh'?'找不到這份結果':'Result not found',4000);
+      renderStep();
+    });
+    return;
+  }
+  const shared=loadShared();
+  if(shared){ enterSharedView(); }
+  else { renderStep(); }
+})();
+</script>
+</body>
+</html>
